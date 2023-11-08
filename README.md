@@ -6,8 +6,8 @@
 
 <br/>
 
-Today, I explored how to create default behaviors for `UITextField` using Objective-C associated objects <br/>
-and extend functionality in Swift using a declarative form.  <br/>
+Today, I explored how to create default behaviors for `UITextField` <br/>
+using Objective-C associated objects and extend functionality in Swift using a declarative form.  <br/>
 
 Here's how I enhanced text fields with input validation and character limit enforcement: <br/>
 
@@ -40,9 +40,38 @@ var characterLimitHandler: CharacterLimitHandler? {
 ```
 
 ### Wait, What is Associated Objects?
-Check out this article: 
 
-<br/>
+Associated objects are like stick-on notes for your Swift objects. <br/>
+You can add these notes to objects at runtime, which is like adding new properties <br/>
+without altering the original class definition. <br/>
+
+**How Stick-on Notes Work** <br/>  
+objc_setAssociatedObject is like writing something on your stick-on note and attaching it to an object.<br/>
+objc_getAssociatedObject is like reading what's written on the note attached to an object.<br/>
+The key is the unique identifier for your note, ensuring you can find the right one among many.<br/>
+
+<br/> 
+
+**Adding Stored Properties:** <br/>
+Associated objects allow you to effectively add stored properties to an instance of a class.<br/> 
+This means you can associate state or storage with an instance that persists across the object's lifetime.<br/> 
+
+<br/> 
+
+**Avoid Subclassing:** <br/> 
+Often, subclassing just to add a single property can be overkill and can lead to a bloated class hierarchy.<br/> 
+Associated objects provide a lightweight alternative to subclassing for storing additional information.<br/>
+
+<br/> 
+
+**Modular Code** <br/>
+They help keep code modular.<br/>
+You can separate concerns by attaching functionality or data to objects <br/>
+without changing their original implementation. <br/>
+
+#
+
+<br/> 
 
 ## ValidationHandler and CharacterLimitHandler:
 
