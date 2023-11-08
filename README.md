@@ -39,7 +39,8 @@ var characterLimitHandler: CharacterLimitHandler? {
 }
 ```
 
-#
+### Wait, What is Associated Objects?
+Check out this article: 
 
 <br/>
 
