@@ -45,9 +45,11 @@ Associated objects are like stick-on notes for your Swift objects. <br/>
 You can add these notes to objects at runtime, which is like adding new properties <br/>
 without altering the original class definition. <br/>
 
-**How Stick-on Notes Work** <br/>  
-objc_setAssociatedObject is like writing something on your stick-on note and attaching it to an object.<br/>
-objc_getAssociatedObject is like reading what's written on the note attached to an object.<br/>
+<br/>
+
+**How Stick-on Notes Work:** <br/>
+`objc_setAssociatedObject` is like writing something on your stick-on note and attaching it to an object.<br/>
+`objc_getAssociatedObject` is like reading what's written on the note attached to an object.<br/>
 The key is the unique identifier for your note, ensuring you can find the right one among many.<br/>
 
 <br/> 
