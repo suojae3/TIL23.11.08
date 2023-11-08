@@ -75,17 +75,18 @@ without changing their original implementation. <br/>
 
 <br/> 
 
-## ValidationHandler and CharacterLimitHandler:
+## CharacterLimitHandler:
 
-These classes handle input validation and character limiting. They use RxSwift to react to text changes:
+These classes handle input character limiting. It uses RxSwift to react to text changes:
 
 ```swift
-class ValidationHandler {
-    // ... Initialization and setup for different validation types
-}
-
-class CharacterLimitHandler {
-    // ... Initialization and function to apply character limit
+var characterLimitHandler: CharacterLimitHandler? {
+    get {
+        return objc_getAssociatedObject(self, &AssociatedKeys.characterLimitHandler) as? CharacterLimitHandler
+    }
+    set {
+        objc_setAssociatedObject(self, &AssociatedKeys.characterLimitHandler, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+    }
 }
 ```
 
@@ -99,12 +100,26 @@ I extended `UITextField` to support a declarative style, enabling easy configura
 
 ```swift
 extension UITextField {
-    func setupForValidation(type: ValidationHandler.ValidationType) -> Self {
-        // ... Configure validation
-    }
 
     func setupForCharacterLimit(limit: Int) -> Self {
-        // ... Configure character limit
+        let handler = CharacterLimitHandler(limit: limit)
+        self.characterLimitHandler = handler
+        
+        self.rx.text
+            .compactMap { $0 }
+            .flatMapLatest { text -> Observable<String> in
+                let limitedText = String(text.prefix(limit))
+                return .just(limitedText)
+            }
+            .observe(on: MainScheduler.instance)
+            .subscribe(onNext: { [weak self] limitedText in
+                if self?.text != limitedText {
+                    self?.text = limitedText
+                }
+            })
+            .disposed(by: handler.disposeBag)
+        
+        return self
     }
 }
 ```
@@ -121,7 +136,6 @@ Here's how you can set up a text field with both validation and a character limi
 
 ```swift
 let textField = UITextField()
-  .setupForValidation(type: .email)
   .setupForCharacterLimit(limit: 50)
 ```
 
@@ -134,5 +148,3 @@ let textField = UITextField()
 This exploration into combining Objective-C runtime features with Swift's declarative programming has led to cleaner, more maintainable code. It demonstrates the power of extending UIKit components in a way that aligns with modern Swift practices.
 
 --- 
-
-Feel free to use this template as a starting point and insert the full code snippets where appropriate or as an appendix to the post.
