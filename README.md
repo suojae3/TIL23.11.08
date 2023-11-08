@@ -9,7 +9,7 @@
 Today, I explored how to create default behaviors for `UITextField` <br/>
 using Objective-C associated objects and extend functionality in Swift using a declarative form.  <br/>
 
-Here's how I enhanced text fields with input validation and character limit enforcement: <br/>
+Here's how I enhanced text fields with input character limit enforcement in declarative: <br/>
 
 #
 
